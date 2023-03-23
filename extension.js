@@ -1,6 +1,5 @@
 game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封神演义",content:function (config, pack) {
         // CharacterConfig.openUI()
-
     },precontent:function () {
             const extension = "The-Canonization-of-the-Gods"
             const basePath = `extension/${extension}/resources/`
@@ -52,4 +51,4 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
     diskURL:"",
     forumURL:"",
     version:"1.0",
-},files:{"character":["tesst.jpg"],"card":[],"skill":[]}}})
+},}})
