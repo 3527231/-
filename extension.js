@@ -63,7 +63,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
     },
                 config:{
                     "phase_list":["当你不因“诛仙”使用伤害类牌指定其他角色为目标时","当你对其他角色造成伤害时","当其他角色对你造成伤害时"],
-                    checkFilter:function(event,status){
+                    getPhaseObj:function(event,status){
             let trigger = event.getTrigger();
             let player = trigger.player;
             let source = trigger.source;
@@ -78,10 +78,13 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
             
             return {player:player,target:source}
         },
-                    getPhaseObj:function(player,triggername,status){
+                    checkFilter:function(player,trigger,triggername,status){
             let phaseEvent = '';
             if(status == 0){
                 phaseEvent = 'useCardToBegin'
+                if(trigger.target == game.me){
+                    return false
+                }
             }
             if(status == 1){
                 phaseEvent = 'damageBegin'
@@ -107,23 +110,28 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
                     player:["damageBegin","useCardToBegin"],
                     source:"damageBegin",
                 },
-                group:[],
+                group:["fsyy_luxian_die","fsyy_luxian_mark"],
                 filter:function(trigger,player,triggername){
-        return lib.skill.fsyy_juexian.config.checkFilter(trigger.player,triggername,this.config.event_status)
+        return lib.skill.fsyy_juexian.config.checkFilter(trigger.player,trigger,triggername,this.config.event_status)
     },
                 content:function(){
         let flag = lib.skill.fsyy_juexian.config.getPhaseObj(event,lib.skill[this.name].config.event_status)
     },
                 subSkill:{
                     die:{
+                        global:true,
                         sub:true,
                     },
                     mark:{
+                        marktext:"戮",
+                        intro:{
+                            content:"mark",
+                        },
                         sub:true,
                     },
                 },
                 config:{
-                    "event_status":2,
+                    "event_status":1,
                 },
             },
         },
