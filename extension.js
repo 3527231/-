@@ -48,7 +48,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Â∞ÅÁ•
                 },
                 frequent:true,
                 content:function(){
-        console.log(this)
+        console.log("66666")
     },
                 config:{
                     choose:1,
