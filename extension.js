@@ -62,25 +62,63 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
         
     },
                 config:{
-                    "phase_list":["player_useCardTo","source_damage","player_damage"],
+                    "phase_list":["当你不因“诛仙”使用伤害类牌指定其他角色为目标时","当你对其他角色造成伤害时","当其他角色对你造成伤害时"],
+                    "check_phase":function(event,status){
+            console.log(event)
+            let trigger = event.getTrigger();
+            let player = trigger.player;
+            let source = trigger.source;
+            if(status == 0){
+                source = trigger.target
+            }
+            if(status == 1){
+                player = trigger.source
+                source = trigger.player
+                
+            }
+            
+            return {player:player,target:source}
+        },
+                    "check_filter":function(player,triggername,status){
+            let phaseEvent = '';
+            if(status == 0){
+                phaseEvent = 'useCardToBegin'
+            }
+            if(status == 1){
+                phaseEvent = 'damageBegin'
+                if(player == game.me){
+                    return false
+                }
+            }
+            if(status == 2){
+                phaseEvent = 'damageBegin'
+                if(player != game.me){
+                    return false
+                }
+            }
+            if(phaseEvent != triggername){
+                return false
+            }
+            return true
+        },
                 },
             },
             "fsyy_luxian":{
                 trigger:{
-                    player:["DamageBegin","useCardToBegin"],
-                    source:"DamageBegin",
+                    player:["damageBegin","useCardToBegin"],
+                    source:"damageBegin",
                 },
                 group:[],
+                filter:function(trigger,player,triggername){
+        console.log(lib.skill.fsyy_juexian.config.check_filter(trigger.player,triggername,this.config.event_status))
+        return lib.skill.fsyy_juexian.config.check_filter(trigger.player,triggername,this.config.event_status)
+    },
                 content:function(){
-        const status = lib.skill[this.name].config.event_status
-        if(status == 0){
-            
-        }
-        if(status == 1){
-            
-        }
-        if(status == 2){
-            
+        let flag = lib.skill.fsyy_juexian.config.check_phase(event,lib.skill[this.name].config.event_status)
+        if(flag){
+            console.log(flag)
+        }else{
+            console.log(false)
         }
     },
                 subSkill:{
@@ -92,7 +130,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
                     },
                 },
                 config:{
-                    "event_status":1,
+                    "event_status":2,
                 },
             },
         },
