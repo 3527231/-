@@ -79,22 +79,23 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Â∞ÅÁ•
             return {player:player,target:source}
         },
                     checkFilter:function(player,trigger,triggername,status){
+            console.log(triggername,player)
             let phaseEvent = '';
             if(status == 0){
                 phaseEvent = 'useCardToBegin'
-                if(trigger.target == game.me){
+                if(trigger.target == player){
                     return false
                 }
             }
             if(status == 1){
                 phaseEvent = 'damageBegin'
-                if(player == game.me){
+                if(trigger.player == player){
                     return false
                 }
             }
             if(status == 2){
                 phaseEvent = 'damageBegin'
-                if(player != game.me){
+                if(trigger.player != player){
                     return false
                 }
             }
@@ -112,7 +113,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Â∞ÅÁ•
                 },
                 group:["fsyy_luxian_die","fsyy_luxian_mark"],
                 filter:function(trigger,player,triggername){
-        return lib.skill.fsyy_juexian.config.checkFilter(trigger.player,trigger,triggername,this.config.event_status)
+        return lib.skill.fsyy_juexian.config.checkFilter(player,trigger,triggername,this.config.event_status)
     },
                 content:function(){
         let flag = lib.skill.fsyy_juexian.config.getPhaseObj(event,lib.skill[this.name].config.event_status)
