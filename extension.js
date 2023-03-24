@@ -64,7 +64,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
                 config:{
                     "phase_list":["当你不因“诛仙”使用伤害类牌指定其他角色为目标时","当你对其他角色造成伤害时","当其他角色对你造成伤害时"],
                     "check_phase":function(event,status){
-            console.log(event)
             let trigger = event.getTrigger();
             let player = trigger.player;
             let source = trigger.source;
