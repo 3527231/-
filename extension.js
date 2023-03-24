@@ -63,7 +63,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
     },
                 config:{
                     "phase_list":["当你不因“诛仙”使用伤害类牌指定其他角色为目标时","当你对其他角色造成伤害时","当其他角色对你造成伤害时"],
-                    "check_phase":function(event,status){
+                    checkFilter:function(event,status){
             let trigger = event.getTrigger();
             let player = trigger.player;
             let source = trigger.source;
@@ -78,7 +78,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
             
             return {player:player,target:source}
         },
-                    "check_filter":function(player,triggername,status){
+                    getPhaseObj:function(player,triggername,status){
             let phaseEvent = '';
             if(status == 0){
                 phaseEvent = 'useCardToBegin'
@@ -109,16 +109,10 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
                 },
                 group:[],
                 filter:function(trigger,player,triggername){
-        console.log(lib.skill.fsyy_juexian.config.check_filter(trigger.player,triggername,this.config.event_status))
-        return lib.skill.fsyy_juexian.config.check_filter(trigger.player,triggername,this.config.event_status)
+        return lib.skill.fsyy_juexian.config.checkFilter(trigger.player,triggername,this.config.event_status)
     },
                 content:function(){
-        let flag = lib.skill.fsyy_juexian.config.check_phase(event,lib.skill[this.name].config.event_status)
-        if(flag){
-            console.log(flag)
-        }else{
-            console.log(false)
-        }
+        let flag = lib.skill.fsyy_juexian.config.getPhaseObj(event,lib.skill[this.name].config.event_status)
     },
                 subSkill:{
                     die:{
