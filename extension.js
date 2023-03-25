@@ -54,11 +54,71 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
                     choose:1,
                 },
             },
-            "fsyy_juexian":{
+            "fsyy_boss_luxian":{
+                trigger:{
+                    player:["damageBegin","useCardToBegin"],
+                    source:"damageBegin",
+                },
+                global:"fsyy_boss_luxian_die",
+                group:["fsyy_boss_luxian_mark"],
+                filter:function(trigger,player,triggername){
+        return lib.skill.fsyy_boss_juexian.config.checkFilter(player,trigger,triggername,this.config.event_status)
+    },
+                content:function(){
+        let flag = lib.skill.fsyy_boss_juexian.config.getPhaseObj(event,lib.skill[this.name].config.event_status);
+        
+        flag.target.addMark('fsyy_boss_luxian_mark',1)
+        
+        event.trigger('useJueXianSkill');
+    },
+                subSkill:{
+                    die:{
+                        sub:true,
+                        forced:true,
+                        trigger:{
+                            player:"phaseEnd",
+                        },
+                        filter:function(trigger,player){
+                return player.countMark('fsyy_boss_luxian_mark') > player.maxHp
+            },
+                        content:function(){
+                player.die()
+            },
+                    },
+                    mark:{
+                        marktext:"戮",
+                        intro:{
+                            name:"戮仙",
+                            content:"mark",
+                        },
+                        sub:true,
+                    },
+                },
+                config:{
+                    "event_status":1,
+                },
+            },
+            "fsyy_boss_juexian":{
                 trigger:{
                     player:["phaseBefore","phaseAfter"],
                 },
                 content:function(){
+        var arr = ['fsyy_boss_zhuxian','fsyy_boss_luxian','fsyy_boss_xianxian']
+        var choose_button = [arr.map(str => {
+            return get.translation(str)+": "+lib.skill.fsyy_boss_juexian.config.phase_list[lib.skill[str].config.event_status]
+        }),'tdnodes']
+        "step 0"
+        let next = player.chooseButton(["绝仙: 请选择两项交换条件的技能",choose_button])
+        next.set('forced',true);
+        next.set('selectButton',[2,2]);
+        "step 1"
+        result.links = result.links.map(value=>{
+            return choose_button[0].indexOf(value)
+        })
+        console.log(result.links)
+        let temp = lib.skill[arr[result.links[0]]].config.event_status
+        lib.skill[arr[result.links[0]]].config.event_status = lib.skill[arr[result.links[1]]].config.event_status
+        lib.skill[arr[result.links[1]]].config.event_status = temp
         
     },
                 config:{
@@ -79,7 +139,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
             return {player:player,target:source}
         },
                     checkFilter:function(player,trigger,triggername,status){
-            console.log(triggername,player)
             let phaseEvent = '';
             if(status == 0){
                 phaseEvent = 'useCardToBegin'
@@ -105,44 +164,45 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封�
             return true
         },
                 },
-            },
-            "fsyy_luxian":{
-                trigger:{
-                    player:["damageBegin","useCardToBegin"],
-                    source:"damageBegin",
-                },
-                group:["fsyy_luxian_die","fsyy_luxian_mark"],
-                filter:function(trigger,player,triggername){
-        return lib.skill.fsyy_juexian.config.checkFilter(player,trigger,triggername,this.config.event_status)
-    },
-                content:function(){
-        let flag = lib.skill.fsyy_juexian.config.getPhaseObj(event,lib.skill[this.name].config.event_status)
-    },
                 subSkill:{
-                    die:{
-                        global:true,
-                        sub:true,
-                    },
-                    mark:{
-                        marktext:"戮",
-                        intro:{
-                            content:"mark",
+                    used:{
+                        prompt:"###是否发动【绝仙】？###当你发动以上三个技能之一结算完毕后且你的体力值为全场最小,你可以以任意顺序发动另外两个技能",
+                        trigger:{
+                            player:"useJueXianSkill",
                         },
                         sub:true,
+                        filter:function(trigger,player){
+                return player.isMinHp()
+            },
+                        content:function(){
+                
+            },
                     },
                 },
+                group:["fsyy_boss_juexian_used"],
+            },
+            "fsyy_boss_zhuxian":{
                 config:{
-                    "event_status":1,
+                    "event_status":0,
+                },
+            },
+            "fsyy_boss_xianxian":{
+                config:{
+                    "event_status":2,
                 },
             },
         },
         translate:{
             test:"test",
             "test_info":"test",
-            "fsyy_juexian":"绝仙",
-            "fsyy_juexian_info":"你的回合开始或结束时，你可以任意交换“诛仙”、“戮仙”、“陷仙”的触发时机;当你发动以上三个技能之一结算完毕后且你的体力值为全场最小,你可以以任意顺序发动另外两个技能",
-            "fsyy_luxian":"戮仙",
-            "fsyy_luxian_info":"当你对其他角色造成伤害时，可以令该角色获得一枚“戮仙”标记;拥有“戮仙”标记的角色回合结束时,若其标记数大于体力上限，其死亡",
+            "fsyy_boss_luxian":"戮仙",
+            "fsyy_boss_luxian_info":"当你对其他角色造成伤害时，可以令该角色获得一枚“戮仙”标记;拥有“戮仙”标记的角色回合结束时,若其标记数大于体力上限，其死亡",
+            "fsyy_boss_juexian":"绝仙",
+            "fsyy_boss_juexian_info":"你的回合开始或结束时，你可以任意交换“诛仙”、“戮仙”、“陷仙”的触发时机;当你发动以上三个技能之一结算完毕后且你的体力值为全场最小,你可以以任意顺序发动另外两个技能",
+            "fsyy_boss_zhuxian":"诛仙",
+            "fsyy_boss_zhuxian_info":"",
+            "fsyy_boss_xianxian":"陷仙",
+            "fsyy_boss_xianxian_info":"",
         },
     },
     intro:"",
