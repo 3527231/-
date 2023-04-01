@@ -1,0 +1,72 @@
+.tongtian-extension{
+    background: rgba(0,0,0,.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+.close{
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.extension-header{
+    width: 100%;
+    position: relative;
+}
+.extension-box{
+    width: 60%;
+    background: white;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2.4em;
+    font-family: douzi;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0 0 22px rgba(0,0,0,.12);
+
+}
+.config:hover .icon-arrow-circle-right::before{
+    content: '\e60c';
+}
+.config:hover .icon-github::before{
+    content: "\e66f";
+}
+@font-face {
+    font-family: douzi;
+    src: url("../font/鸿雷拙书简体.ttf");
+}
+.btn-config{
+    transition: 0.2s linear;
+    display: block;
+    border: none;
+    background: inherit;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid;
+}
+.btn-config i{
+    float: right;
+}
+.btn-config:hover{
+    color: #007aff;
+    border-bottom: 1px solid #007aff;
+}
+.config .caption{
+    text-align: center;
+    font-family: douzi;
+    background: #007aff;
+    color: white;
+    border-top: solid 10px rgb(77, 60, 51);
+    font-size: 36px;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}

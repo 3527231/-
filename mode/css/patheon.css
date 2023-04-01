@@ -1,0 +1,249 @@
+.section-card{
+    width: 10%;
+    height: 60%;
+    position: relative;
+    margin: 0 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: inline-block;
+
+    border-radius: 10px;
+
+}
+.time-card{
+    width: 10%;
+    height: 60%;
+    position: relative;
+    margin: 0 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 10px;
+}
+.section-card>div{
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: url("../../image/background/section-bg.png") no-repeat;
+    background-size: 100% 100%;
+}
+.time-card>div{
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: url("../../image/background/section-bg.png") no-repeat;
+    background-size: 100% 100%;
+}
+.section-card .bg{
+    width: 80%;
+    height: 83%;
+    background-size: cover;
+    position: absolute!important;
+    transform: translateX(-50%);
+    align-self: center;
+    background: rgba(0, 0, 0, .8) no-repeat;
+    left: 50%;
+}
+.time-card .bg{
+    width: 80%;
+    height: 83%;
+    background-size: cover;
+    position: absolute!important;
+    transform: translateX(-50%);
+    align-self: center;
+    background: rgba(0, 0, 0, .8) no-repeat;
+    left: 50%;
+}
+.section-card:hover{
+    transform: translateY(-55%);
+}
+.time-card:hover{
+    transform: translateY(-55%);
+}
+.section-card .bottom{
+    width: 100%;
+    display: flex;
+    bottom: 0;
+    justify-content: flex-end;
+    padding-bottom: 30%;
+    font-size: 1.8em;
+    font-family: 'huangcao','xinwei';
+}
+.time-card .bottom{
+    width: 100%;
+    display: flex;
+    bottom: 0;
+    justify-content: flex-end;
+    padding-bottom: 30%;
+    font-size: 1.8em;
+    font-family: 'huangcao','xinwei';
+}
+.section-card.disable::before{
+    z-index: 9999;
+    content: '';
+    position: absolute!important;
+    width: 83%;
+    height: 100%;
+    transform: translateX(-50%);
+    align-self: center;
+    left: 50%;
+    background: url("../../image/background/lock2.png") no-repeat center;
+    background-size: 100%;
+}
+.time-card.disable::before{
+    z-index: 9999;
+    content: '';
+    position: absolute!important;
+    width: 83%;
+    height: 100%;
+    transform: translateX(-50%);
+    align-self: center;
+    left: 50%;
+    background: url("../../image/background/lock2.png") no-repeat center;
+    background-size: 100%;
+}
+.section-card.disable{
+    cursor: unset;
+}
+.time-card.disable{
+    cursor: unset;
+}
+.section-card.select .bottom{
+    opacity: 0;
+}
+.time-card.select .bottom{
+    opacity: 0;
+}
+.section-card.select{
+    position: absolute!important;
+    z-index: 9999;
+    transform-origin: center;
+    animation: 2s scale forwards linear;
+    transform: translateY(-50%) rotate(90deg);
+}
+.time-card.select{
+    position: absolute!important;
+    z-index: 9999;
+    transform-origin: center;
+    animation: 2s scale forwards linear;
+    transform: translateY(-50%) rotate(90deg);
+}
+.section-card.select .bg{
+    background-position: center right;
+    transform: translateX(-50%) rotate(-90deg);
+    animation: 2s bg forwards linear;
+    width: 80vw;
+    height: 83vh;
+}
+.time-card.select .bg{
+    background-position: center right;
+    transform: translateX(-50%) rotate(-90deg);
+    animation: 2s bg forwards linear;
+    width: 80vw;
+    height: 83vh;
+}
+@keyframes scale {
+    0%{
+        transform: translateY(-50%);
+    }
+    50%{
+        transform: translateY(-50%) rotate(90deg);
+    }
+    100%{
+        height: 100vw;
+        width: 100vh;
+    }
+}
+@keyframes bg {
+    0%{
+        transform: translateX(-50%) rotate(-90deg) scale(0);
+    }
+
+    100%{
+        transform: translateX(-50%) rotate(-90deg) scale(1);
+        width: 80vw;
+        height: 83vh;
+    }
+}
+.section-card.disable .box{
+    filter: brightness(60%);
+}
+.time-card.disable .box{
+    filter: brightness(60%);
+}
+
+.section-card.disable:hover{
+    transform: translateY(-50%);
+    box-shadow:none;
+}
+.time-card.disable:hover{
+    transform: translateY(-50%);
+    box-shadow:none;
+}
+#section_list{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+#section_list div{
+    position: relative;
+}
+#time_list{
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+#time_list div{
+    position: relative;
+}
+.bottom *{
+    transition: none;
+    margin: 0;
+    writing-mode: vertical-rl;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.bottom{
+    margin-right: 10%;
+}
+.bottom h4{
+}
+.bottom .section-title{
+}
+#patheon{
+    width: 100%;
+    height: 100%;
+}
+.btn-back{
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.btn-back{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-family: 'huangcao','xinwei';
+    font-size: 24px;
+    outline: none;
+}
+.btn-back img{
+    width: 80px;
+}
