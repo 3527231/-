@@ -1,23 +1,16 @@
-<<<<<<< HEAD
-game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"封神演义",content:function (config, pack) {
-        // CharacterConfig.openUI()
-    },precontent:function () {
-            const extension = "封神演义"
-=======
 game.import("extension",function(lib,game,ui,get,ai,_status){
 
     return {name:"封神榜",content:function (config, pack) {
-        // CharacterConfig.openUI()
+            // CharacterConfig.openUI()
             for (let character in pack.character.character){
                 pack.character.character[character][4].push(`ext:${this[0]}/image/character/${character}.jpg`)
             }
 
-    },precontent:function () {
+        },precontent:function () {
             setTimeout(function (){
                 lib.mode.patheon.splash=lib.mode.patheon.splash.replace('封神榜','封神榜/image/splash')
             },0)
             const extension = "封神榜"
->>>>>>> 58a736699a24e8300d0be8df1051069a889fbf38
             const basePath = `extension/${extension}/resources/`
             function loadJs(path) {//引入js
                 let script = document.createElement('script')
@@ -42,284 +35,267 @@ game.import("extension",function(lib,game,ui,get,ai,_status){
                 }
             })
 
-<<<<<<< HEAD
-        },help:{},config:{"option_text":{"name":"<div class=\"caption\">拓展功能</div>","clear":true,"nopointer":true},"skillConfig":{"name":"<a href='javascript:;' class='btn-config' onclick=\"CharacterConfig.openUI()\"><b>技能配置</b><i class='iconfont icon-arrow-circle-right'></i></a>","clear":true,"nopointer":true},"github":{"name":"<a target='_blank' href='https://github.com/3527231' class='btn-config'><b>GitHub</b><i class='iconfont icon-github'></i></a>","clear":true,"nopointer":true}},package:{
-    character:{
-        character:{
-        },
-        translate:{
-=======
 
         },help:{},config:{"option_text":{"name":"<div class=\"caption\">拓展功能</div>","clear":true,"nopointer":true},"skillConfig":{"name":"<a href='javascript:;' class='btn-config' onclick=\"CharacterConfig.openUI()\"><b>技能配置</b><i class='iconfont icon-arrow-circle-right'></i></a>","clear":true,"nopointer":true},"github":{"name":"<a target='_blank' href='https://github.com/3527231/The-Canonization-of-the-Gods' class='btn-config'><b>GitHub</b><i class='iconfont icon-github'></i></a>","clear":true,"nopointer":true}},package:{
-    character:{
-        character:{
-            "boss_tongtian":["male","shen",4,["fsyy_boss_zhuxian","fsyy_boss_luxian","fsyy_boss_xianxian","fsyy_boss_juexian"],[]],
-        },
-        translate:{
-            "boss_tongtian":"通天教主",
->>>>>>> 58a736699a24e8300d0be8df1051069a889fbf38
-        },
-    },
-    card:{
-        card:{
-        },
-        translate:{
-        },
-        list:[],
-    },
-    skill:{
-        skill:{
-            test:{
-                trigger:{
-                    player:"useSkillEnd",
+            character:{
+                character:{
+                    "boss_tongtian":["male","shen",4,["fsyy_boss_zhuxian","fsyy_boss_luxian","fsyy_boss_xianxian","fsyy_boss_juexian"],[]],
                 },
-                frequent:true,
-                content:function(){
-        console.log("666")
-    },
-                config:{
-                    choose:1,
+                translate:{
+                    "boss_tongtian":"通天教主",
                 },
             },
-<<<<<<< HEAD
-=======
-            "fsyy_boss_luxian":{
-                trigger:{
-                    player:["damageBegin","useCardToPlayered"],
-                    source:"damageBegin",
+            card:{
+                card:{
                 },
-                global:"fsyy_boss_luxian_die",
-                group:["fsyy_boss_luxian_mark"],
-                filter:function(trigger,player,triggername){
-        return lib.skill.fsyy_boss_juexian.config.checkFilter(player,trigger,triggername,this.config.event_status)
-    },
-                content:function(){
-        let flag = lib.skill.fsyy_boss_juexian.config.getPhaseObj(event,lib.skill.fsyy_boss_luxian.config.event_status);
-        
-        flag.target.addMark('fsyy_boss_luxian_mark',1)
-        if(event.isJueXian){
-             event.flag = flag;
-           event.trigger('useJueXianSkill');   
-        }
-        
-    },
-                subSkill:{
-                    die:{
-                        sub:true,
-                        forced:true,
+                translate:{
+                },
+                list:[],
+            },
+            skill:{
+                skill:{
+                    test:{
                         trigger:{
-                            player:"phaseEnd",
+                            player:"useSkillEnd",
                         },
-                        filter:function(trigger,player){
-                return player.countMark('fsyy_boss_luxian_mark') > player.maxHp
-            },
+                        frequent:true,
                         content:function(){
-                player.die()
-            },
-                    },
-                    mark:{
-                        marktext:"戮",
-                        intro:{
-                            name:"戮仙",
-                            content:"mark",
+                            console.log("666")
                         },
-                        sub:true,
+                        config:{
+                            choose:1,
+                        },
                     },
-                },
-                config:{
-                    "event_status":1,
-                },
-            },
-            "fsyy_boss_juexian":{
-                trigger:{
-                    player:["phaseBefore","phaseAfter"],
-                },
-                content:function(){
-        var arr = ['fsyy_boss_zhuxian','fsyy_boss_luxian','fsyy_boss_xianxian']
-        var choose_button = [arr.map(str => {
-            return get.translation(str)+": "+lib.skill.fsyy_boss_juexian.config.phase_list[lib.skill[str].config.event_status]
-        }),'tdnodes']
-        "step 0"
-        let next = player.chooseButton(["绝仙: 请选择两项交换条件的技能",choose_button])
-        next.set('forced',true);
-        next.set('selectButton',[2,2]);
-        "step 1"
-        result.links = result.links.map(value=>{
-            return choose_button[0].indexOf(value)
-        })
-        let temp = lib.skill[arr[result.links[0]]].config.event_status
-        lib.skill[arr[result.links[0]]].config.event_status = lib.skill[arr[result.links[1]]].config.event_status
-        lib.skill[arr[result.links[1]]].config.event_status = temp
-        
-    },
-                config:{
-                    "skill_list":["fsyy_boss_zhuxian","fsyy_boss_luxian","fsyy_boss_xianxian"],
-                    "phase_list":["当你不因“诛仙”使用伤害类牌指定其他角色为目标时","当你对其他角色造成伤害时","当其他角色对你造成伤害时"],
-                    getPhaseObj:function(event,status){
-
-            if (event.isJueXian){
-                return event.flag
-            }
-            let trigger = event.getTrigger();
-            let player = trigger.player;
-            if(status == 0){
-                source = trigger.target
-                if(trigger.target == get){
-                    return false
-                }
-            }
-            if(status == 1){
-                player = trigger.source
-                source = trigger.player
-            }
-            
-            return {player:player,target:source}
-        },
-                    checkFilter:function(player,trigger,triggername,status){
-            let phaseEvent = '';
-            if(status == 0){
-                phaseEvent = 'useCardToPlayered'
-                if(trigger.target == player){
-                    return false
-                }
-            }
-            if(status == 1){
-                phaseEvent = 'damageBegin'
-                if(trigger.player == player){
-                    return false
-                }
-            }
-            if(status == 2){
-                phaseEvent = 'damageBegin'
-                if(trigger.player != player){
-                    return false
-                }
-            }
-            if(phaseEvent != triggername){
-                return false
-            }
-            return true
-        },
-                },
-                subSkill:{
-                    used:{
-                        prompt:"###是否发动【绝仙】？###当你发动以上三个技能之一结算完毕后且你的体力值为全场最小,你可以以任意顺序发动另外两个技能",
+                    "fsyy_boss_luxian":{
                         trigger:{
-                            player:"useJueXianSkill",
+                            player:["damageBegin","useCardToPlayered"],
+                            source:"damageBegin",
                         },
-                        sub:true,
-                        filter:function(trigger,player){
-                return player.isMinHp()
-            },
+                        global:"fsyy_boss_luxian_die",
+                        group:["fsyy_boss_luxian_mark"],
+                        filter:function(trigger,player,triggername){
+                            return lib.skill.fsyy_boss_juexian.config.checkFilter(player,trigger,triggername,this.config.event_status)
+                        },
                         content:function(){
-                
-                let trigger_skill = this._trigger.name
-                
-                let filter = lib.skill.fsyy_boss_juexian.config.skill_list.filter(value=>{
-                    return value != trigger_skill
-                })
-                let map = filter.map(value=>{
-                    return get.translation(value)
-                })
-                "step 0"
-                player.chooseControl(map).set('prompt',"###选择【绝仙】选项###选择先触发效果的技能");
-                "step 1"
-                let arr = []
-                filter.forEach(value=>{
-                    if(get.translation(value) == result.control){
-                        arr.unshift(value)
-                    }else{
-                        arr.push(value)
-                    }
-                })
-                arr.forEach(value => {
-                    let next = game.createEvent('jueXianUseSkill')
-                    next.isJueXian = true
-                    next.flag = trigger.flag
-                    next.setContent(lib.skill[value].content)
-                })
-                event.finish()
-            },
+                            let flag = lib.skill.fsyy_boss_juexian.config.getPhaseObj(event,lib.skill.fsyy_boss_luxian.config.event_status);
+
+                            flag.target.addMark('fsyy_boss_luxian_mark',1)
+                            if(event.isJueXian){
+                                event.flag = flag;
+                                event.trigger('useJueXianSkill');
+                            }
+
+                        },
+                        subSkill:{
+                            die:{
+                                sub:true,
+                                forced:true,
+                                trigger:{
+                                    player:"phaseEnd",
+                                },
+                                filter:function(trigger,player){
+                                    return player.countMark('fsyy_boss_luxian_mark') > player.maxHp
+                                },
+                                content:function(){
+                                    player.die()
+                                },
+                            },
+                            mark:{
+                                marktext:"戮",
+                                intro:{
+                                    name:"戮仙",
+                                    content:"mark",
+                                },
+                                sub:true,
+                            },
+                        },
+                        config:{
+                            "event_status":1,
+                        },
+                    },
+                    "fsyy_boss_juexian":{
+                        trigger:{
+                            player:["phaseBefore","phaseAfter"],
+                        },
+                        content:function(){
+                            var arr = ['fsyy_boss_zhuxian','fsyy_boss_luxian','fsyy_boss_xianxian']
+                            var choose_button = [arr.map(str => {
+                                return get.translation(str)+": "+lib.skill.fsyy_boss_juexian.config.phase_list[lib.skill[str].config.event_status]
+                            }),'tdnodes']
+                            "step 0"
+                            let next = player.chooseButton(["绝仙: 请选择两项交换条件的技能",choose_button])
+                            next.set('forced',true);
+                            next.set('selectButton',[2,2]);
+                            "step 1"
+                            result.links = result.links.map(value=>{
+                                return choose_button[0].indexOf(value)
+                            })
+                            let temp = lib.skill[arr[result.links[0]]].config.event_status
+                            lib.skill[arr[result.links[0]]].config.event_status = lib.skill[arr[result.links[1]]].config.event_status
+                            lib.skill[arr[result.links[1]]].config.event_status = temp
+
+                        },
+                        config:{
+                            "skill_list":["fsyy_boss_zhuxian","fsyy_boss_luxian","fsyy_boss_xianxian"],
+                            "phase_list":["当你不因“诛仙”使用伤害类牌指定其他角色为目标时","当你对其他角色造成伤害时","当其他角色对你造成伤害时"],
+                            getPhaseObj:function(event,status){
+
+                                if (event.isJueXian){
+                                    return event.flag
+                                }
+                                let trigger = event.getTrigger();
+                                let player = trigger.player;
+                                if(status == 0){
+                                    source = trigger.target
+                                    if(trigger.target == get){
+                                        return false
+                                    }
+                                }
+                                if(status == 1){
+                                    player = trigger.source
+                                    source = trigger.player
+                                }
+
+                                return {player:player,target:source}
+                            },
+                            checkFilter:function(player,trigger,triggername,status){
+                                let phaseEvent = '';
+                                if(status == 0){
+                                    phaseEvent = 'useCardToPlayered'
+                                    if(trigger.target == player){
+                                        return false
+                                    }
+                                }
+                                if(status == 1){
+                                    phaseEvent = 'damageBegin'
+                                    if(trigger.player == player){
+                                        return false
+                                    }
+                                }
+                                if(status == 2){
+                                    phaseEvent = 'damageBegin'
+                                    if(trigger.player != player){
+                                        return false
+                                    }
+                                }
+                                if(phaseEvent != triggername){
+                                    return false
+                                }
+                                return true
+                            },
+                        },
+                        subSkill:{
+                            used:{
+                                prompt:"###是否发动【绝仙】？###当你发动以上三个技能之一结算完毕后且你的体力值为全场最小,你可以以任意顺序发动另外两个技能",
+                                trigger:{
+                                    player:"useJueXianSkill",
+                                },
+                                sub:true,
+                                filter:function(trigger,player){
+                                    return player.isMinHp()
+                                },
+                                content:function(){
+
+                                    let trigger_skill = this._trigger.name
+
+                                    let filter = lib.skill.fsyy_boss_juexian.config.skill_list.filter(value=>{
+                                        return value != trigger_skill
+                                    })
+                                    let map = filter.map(value=>{
+                                        return get.translation(value)
+                                    })
+                                    "step 0"
+                                    player.chooseControl(map).set('prompt',"###选择【绝仙】选项###选择先触发效果的技能");
+                                    "step 1"
+                                    let arr = []
+                                    filter.forEach(value=>{
+                                        if(get.translation(value) == result.control){
+                                            arr.unshift(value)
+                                        }else{
+                                            arr.push(value)
+                                        }
+                                    })
+                                    arr.forEach(value => {
+                                        let next = game.createEvent('jueXianUseSkill')
+                                        next.isJueXian = true
+                                        next.flag = trigger.flag
+                                        next.setContent(lib.skill[value].content)
+                                    })
+                                    event.finish()
+                                },
+                            },
+                        },
+                        group:["fsyy_boss_juexian_used"],
+                    },
+                    "fsyy_boss_zhuxian":{
+                        trigger:{
+                            player:["damageBegin","useCardToPlayered"],
+                            source:"damageBegin",
+                        },
+                        filter:function (trigger, player, triggername) {
+                            if(!get.tag(trigger.card,'damage')) return false;
+                            if(trigger.card.storage && trigger.card.storage.zhuxian){
+                                trigger.target.addTempSkill('qinggang2');
+                                trigger.target.storage.qinggang2.add(trigger.card);
+                                trigger.target.markSkill('qinggang2');
+                                return false;
+                            }
+                            return lib.skill.fsyy_boss_juexian.config.checkFilter(player,trigger,triggername,this.config.event_status);
+                        },
+                        content:function (){
+                            let flag = lib.skill.fsyy_boss_juexian.config.getPhaseObj(event,lib.skill.fsyy_boss_zhuxian.config.event_status);
+                            'step 0'
+                            var playername = get.translation(flag.player.name);
+                            flag.target.chooseControl(['选项①','选项②'])
+                                .set('prompt',`选择: 1. ${playername}对你造成一点雷电伤害，2.令${playername}摸一张牌然后视为对你使用一张无视防具的火【杀】`)
+                                .set('ai',() =>  _status.event.player.hasShan() ? '诛仙_2' : '诛仙_1');
+                            'step 1'
+                            if(result.control=='选项①'){
+                                flag.target.damage('thunder');
+                            }else{
+                                flag.player.draw();
+                                flag.player.useCard({name:'sha',nature:'fire',storage:{zhuxian:true}},flag.target);
+                            }
+                            if(event.isJueXian){
+                                event.flag = flag;
+                                event.trigger('useJueXianSkill');
+                            }
+
+                        },
+                        config:{
+                            "event_status":0,
+                        },
+                    },
+                    "fsyy_boss_xianxian":{
+                        config:{
+                            "event_status":2,
+                        },
+                        content:function (){
+                            let flag = lib.skill.fsyy_boss_juexian.config.getPhaseObj(event,lib.skill.fsyy_boss_xianxian.config.event_status);
+
+                            console.log(flag)
+                        },
                     },
                 },
-                group:["fsyy_boss_juexian_used"],
-            },
-            "fsyy_boss_zhuxian":{
-                trigger:{
-                    player:["damageBegin","useCardToPlayered"],
-                    source:"damageBegin",
-                },
-                filter:function (trigger, player, triggername) {
-        if(!get.tag(trigger.card,'damage')) return false;
-        if(trigger.card.storage && trigger.card.storage.zhuxian){
-          trigger.target.addTempSkill('qinggang2');
-          trigger.target.storage.qinggang2.add(trigger.card);
-          trigger.target.markSkill('qinggang2');
-          return false;
-        }
-        return lib.skill.fsyy_boss_juexian.config.checkFilter(player,trigger,triggername,this.config.event_status);
-    },
-                content:function (){
-        let flag = lib.skill.fsyy_boss_juexian.config.getPhaseObj(event,lib.skill.fsyy_boss_zhuxian.config.event_status);
-        'step 0'
-        var playername = get.translation(flag.player.name);
-        flag.target.chooseControl(['选项①','选项②'])
-          .set('prompt',`选择: 1. ${playername}对你造成一点雷电伤害，2.令${playername}摸一张牌然后视为对你使用一张无视防具的火【杀】`)
-          .set('ai',() =>  _status.event.player.hasShan() ? '诛仙_2' : '诛仙_1');
-        'step 1'
-        if(result.control=='选项①'){
-          flag.target.damage('thunder');
-        }else{
-          flag.player.draw();
-          flag.player.useCard({name:'sha',nature:'fire',storage:{zhuxian:true}},flag.target);
-        }
-        if(event.isJueXian){
-             event.flag = flag;
-           event.trigger('useJueXianSkill');   
-        }
-        
-    },
-                config:{
-                    "event_status":0,
+                translate:{
+                    test:"test",
+                    "test_info":"test",
+                    "fsyy_boss_luxian":"戮仙",
+                    "fsyy_boss_luxian_info":"当你对其他角色造成伤害时，可以令该角色获得一枚“戮仙”标记;拥有“戮仙”标记的角色回合结束时,若其标记数大于体力上限，其死亡",
+                    "fsyy_boss_juexian":"绝仙",
+                    "fsyy_boss_juexian_info":"你的回合开始或结束时，你可以任意交换“诛仙”、“戮仙”、“陷仙”的触发时机;当你发动以上三个技能之一结算完毕后且你的体力值为全场最小,你可以以任意顺序发动另外两个技能",
+                    "fsyy_boss_zhuxian":"诛仙",
+                    "fsyy_boss_zhuxian_info":"当你不因“诛仙”使用伤害类牌指定其他角色为目标时，你可以令该角色选择：1.你对其造成一点雷电伤害，2.你摸一张牌然后你视为对其使用一张无视防具且不计入次数上限的火【杀】",
+                    "fsyy_boss_xianxian":"陷仙",
+                    "fsyy_boss_xianxian_info":"当其他角色对你造成伤害时，你可以进行一次判定，若结果为：黑色，该角色横置并翻面；红色，该角色弃置两张牌并跳过下个出牌阶段",
                 },
             },
-            "fsyy_boss_xianxian":{
-                config:{
-                    "event_status":2,
-                },
-                content:function (){
-        let flag = lib.skill.fsyy_boss_juexian.config.getPhaseObj(event,lib.skill.fsyy_boss_xianxian.config.event_status);
-
-        console.log(flag)
-    },
-            },
->>>>>>> 58a736699a24e8300d0be8df1051069a889fbf38
-        },
-        translate:{
-            test:"test",
-            "test_info":"test",
-<<<<<<< HEAD
-=======
-            "fsyy_boss_luxian":"戮仙",
-            "fsyy_boss_luxian_info":"当你对其他角色造成伤害时，可以令该角色获得一枚“戮仙”标记;拥有“戮仙”标记的角色回合结束时,若其标记数大于体力上限，其死亡",
-            "fsyy_boss_juexian":"绝仙",
-            "fsyy_boss_juexian_info":"你的回合开始或结束时，你可以任意交换“诛仙”、“戮仙”、“陷仙”的触发时机;当你发动以上三个技能之一结算完毕后且你的体力值为全场最小,你可以以任意顺序发动另外两个技能",
-            "fsyy_boss_zhuxian":"诛仙",
-            "fsyy_boss_zhuxian_info":"当你不因“诛仙”使用伤害类牌指定其他角色为目标时，你可以令该角色选择：1.你对其造成一点雷电伤害，2.你摸一张牌然后你视为对其使用一张无视防具且不计入次数上限的火【杀】",
-            "fsyy_boss_xianxian":"陷仙",
-            "fsyy_boss_xianxian_info":"当其他角色对你造成伤害时，你可以进行一次判定，若结果为：黑色，该角色横置并翻面；红色，该角色弃置两张牌并跳过下个出牌阶段",
->>>>>>> 58a736699a24e8300d0be8df1051069a889fbf38
-        },
-    },
-    intro:"",
-    author:"",
-    diskURL:"",
-    forumURL:"",
-    version:"1.0",
-<<<<<<< HEAD
-},files:{"character":[],"card":[],"skill":[]}}})
-=======
-},files:{"character":["boss_tongtian.jpg"],"card":[],"skill":[]}}})
+            intro:"",
+            author:"",
+            diskURL:"",
+            forumURL:"",
+            version:"1.0",
+        },files:{"character":["boss_tongtian.jpg"],"card":[],"skill":[]}}})
 game.addMode('patheon',{
     start:function (){
         "step 0"
@@ -708,4 +684,3 @@ game.addMode('patheon',{
     extension:"封神榜",
     translate:"封神演义"
 })
->>>>>>> 58a736699a24e8300d0be8df1051069a889fbf38
